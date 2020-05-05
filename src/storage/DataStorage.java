@@ -1,11 +1,9 @@
 package storage;
 
-import main.ItemDateComparator;
 import model.Category;
 import model.Item;
 import model.User;
 import util.FileUtil;
-import util.FileUtil1;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,7 +22,7 @@ public class DataStorage {
     public void add(Item item) throws IOException {
         item.setId(itemId++);
         items.add(item);
-        FileUtil1.serializeItemList(items);
+        FileUtil.serializeItemList(items);
     }
 
     public User getUser(String phoneNumber) {
@@ -101,11 +99,11 @@ public class DataStorage {
 
     public void deleteItemsById(Long id) throws IOException {
         items.remove(getItemById(id));
-        FileUtil1.serializeItemList(items);
+        FileUtil.serializeItemList(items);
     }
 
     public void initData() throws IOException, ClassNotFoundException {
         userMap = FileUtil.deserializeUserMap();
-        items = FileUtil1.deserializeItemList();
+        items = FileUtil.deserializeItemList();
     }
 }
