@@ -6,6 +6,7 @@ import model.Item;
 import model.User;
 import storage.DataStorage;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Date;
@@ -18,9 +19,8 @@ public class AdvertisementMain implements Commands {
     private static User currentUser = null;
 
 
-    public static void main(String[] args) {
-        //init data
-        dataStorage.add(new User("poxos", "poxosyan", 22, Gender.MALE, "999", "999"));
+    public static void main(String[] args) throws IOException,ClassNotFoundException {
+        dataStorage.initData();
         boolean Isrun = true;
         while (Isrun) {
             Commands.printMainCommands();

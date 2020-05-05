@@ -4,7 +4,10 @@ import main.ItemDateComparator;
 import model.Category;
 import model.Item;
 import model.User;
+import util.FileUtil;
+import util.FileUtil1;
 
+import java.io.IOException;
 import java.util.*;
 
 public class DataStorage {
@@ -87,6 +90,8 @@ public class DataStorage {
             Item next = iterator.next();
             if (next.getUser().equals(user)) {
                 iterator.remove();
+
+//                items.removeIf(item -> item.getUser().equals(user));
             }
         }
     }
@@ -94,5 +99,12 @@ public class DataStorage {
     public void deleteItemsById(Long id) {
         items.remove(getItemById(id));
 
+    }
+
+    public void initData() throws IOException, ClassNotFoundException {
+        FileUtil.serializeUserMap(userMap);
+        userMap = FileUtil.deserializeUserMap();
+        FileUtil1.serializeItemList(items);
+        items=FileUtil1.deserializeItemList();
     }
 }

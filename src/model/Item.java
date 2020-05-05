@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Item implements Comparable<Item> {
+public class Item implements Comparable<Item>, Serializable {
     private Long id;
     private String title;
     private String text;
