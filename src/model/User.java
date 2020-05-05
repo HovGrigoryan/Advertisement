@@ -8,7 +8,7 @@ public class User implements Serializable {
     private int age;
     private Gender gender;
     private String phoneNumber;
-    private transient String password;
+    private String password;
 
     public User() {
     }

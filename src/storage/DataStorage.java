@@ -16,13 +16,15 @@ public class DataStorage {
     private Map<String, User> userMap = new HashMap<>();
     private List<Item> items = new ArrayList<>();
 
-    public void add(User user) {
+    public void add(User user) throws IOException {
         userMap.put(user.getPhoneNumber(), user);
+        FileUtil.serializeUserMap(userMap);
     }
 
-    public void add(Item item) {
+    public void add(Item item) throws IOException {
         item.setId(itemId++);
         items.add(item);
+        FileUtil1.serializeItemList(items);
     }
 
     public User getUser(String phoneNumber) {
@@ -84,27 +86,26 @@ public class DataStorage {
         }
     }
 
-    public void deleteItemsByUser(User user) {
+    public void deleteItemsByUser(User user) throws IOException {
         Iterator<Item> iterator = items.iterator();
         while (iterator.hasNext()) {
             Item next = iterator.next();
             if (next.getUser().equals(user)) {
                 iterator.remove();
+                FileUtil.serializeUserMap(userMap);
 
 //                items.removeIf(item -> item.getUser().equals(user));
             }
         }
     }
 
-    public void deleteItemsById(Long id) {
+    public void deleteItemsById(Long id) throws IOException {
         items.remove(getItemById(id));
-
+        FileUtil1.serializeItemList(items);
     }
 
     public void initData() throws IOException, ClassNotFoundException {
-        FileUtil.serializeUserMap(userMap);
         userMap = FileUtil.deserializeUserMap();
-        FileUtil1.serializeItemList(items);
-        items=FileUtil1.deserializeItemList();
+        items = FileUtil1.deserializeItemList();
     }
 }

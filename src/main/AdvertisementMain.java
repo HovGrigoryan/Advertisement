@@ -5,11 +5,14 @@ import model.Gender;
 import model.Item;
 import model.User;
 import storage.DataStorage;
+import util.FileUtil;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AdvertisementMain implements Commands {
@@ -19,8 +22,12 @@ public class AdvertisementMain implements Commands {
     private static User currentUser = null;
 
 
-    public static void main(String[] args) throws IOException,ClassNotFoundException {
-        dataStorage.initData();
+    public static void main(String[] args) throws IOException, ClassNotFoundException, EOFException {
+        try {
+            dataStorage.initData();
+        } catch (EOFException e) {
+            System.out.println("Is empty,please RESGITER");
+        }
         boolean Isrun = true;
         while (Isrun) {
             Commands.printMainCommands();
@@ -48,7 +55,7 @@ public class AdvertisementMain implements Commands {
 
     }
 
-    private static void regsiterUser() {
+    private static void regsiterUser() throws IOException {
         System.out.println("Please Input user data name, surname, gender(MALE,FEMALE), age, phoneNumber,password");
         try {
             String userDataStr = scanner.nextLine();
@@ -72,7 +79,7 @@ public class AdvertisementMain implements Commands {
         }
     }
 
-    private static void loginUSer() {
+    private static void loginUSer() throws IOException {
         System.out.println("Please input PhoneNumber, password");
         try {
             String loginStr = scanner.nextLine();
@@ -87,9 +94,12 @@ public class AdvertisementMain implements Commands {
         } catch (ArrayIndexOutOfBoundsException e) {
             System.out.println("Wrong Data!");
         }
+//        }catch (NullPointerException e){
+//            System.out.println("mmmmmmmmm");
+//        }
     }
 
-    private static void loginSucces() {
+    private static void loginSucces() throws IOException {
         System.out.println("Welcome " + currentUser.getName() + "!");
         boolean Isrun = true;
         while (Isrun) {
@@ -136,7 +146,7 @@ public class AdvertisementMain implements Commands {
 
     }
 
-    private static void deleteById() {
+    private static void deleteById() throws IOException {
         System.out.println("please choose id from list");
         dataStorage.printItemsByUsers(currentUser);
         long id = Long.parseLong(scanner.nextLine());
