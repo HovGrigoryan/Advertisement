@@ -15,7 +15,6 @@ public class FileUtil {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH));
         objectOutputStream.writeObject(userMap);
         objectOutputStream.close();
-
     }
 
     public static Map<String, User> deserializeUserMap() throws IOException, ClassNotFoundException {
@@ -29,7 +28,6 @@ public class FileUtil {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(FILE_PATH1));
         objectOutputStream.writeObject(items);
         objectOutputStream.close();
-
     }
 
     public static List<Item> deserializeItemList() throws IOException, ClassNotFoundException {

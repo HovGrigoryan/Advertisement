@@ -90,11 +90,11 @@ public class DataStorage {
             Item next = iterator.next();
             if (next.getUser().equals(user)) {
                 iterator.remove();
-                FileUtil.serializeUserMap(userMap);
-
 //                items.removeIf(item -> item.getUser().equals(user));
             }
         }
+        FileUtil.serializeUserMap(userMap);
+
     }
 
     public void deleteItemsById(Long id) throws IOException {
