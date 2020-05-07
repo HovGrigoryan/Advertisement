@@ -13,7 +13,7 @@ public class FileUtil {
     private static final String USER_MAP_PATH = "C:\\Users\\Hov\\Desktop\\GIT JAVA\\Advertisement\\Advertisement\\src\\resource\\userMap.obj";
     private static final String ITEM_LIST_PATH = "C:\\Users\\Hov\\Desktop\\GIT JAVA\\Advertisement\\Advertisement\\src\\resource\\itemList.obj";
 
-    public static void serializeUserMap(Map<String, User> userMap) throws IOException {
+    public static void serializeUserMap(Map<String, User> userMap)  {
         File userMapFile = new File(USER_MAP_PATH);
         try {
             if (!userMapFile.exists()) {
@@ -49,7 +49,7 @@ public class FileUtil {
             if (!itemListFile.exists()) {
                 itemListFile.createNewFile();
             }
-            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(USER_MAP_PATH))) {
+            try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(ITEM_LIST_PATH))) {
                 objectOutputStream.writeObject(items);
             }
         } catch (IOException e) {
