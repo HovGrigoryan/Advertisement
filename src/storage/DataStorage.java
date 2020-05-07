@@ -105,5 +105,9 @@ public class DataStorage {
     public void initData() throws IOException, ClassNotFoundException {
         userMap = FileUtil.deserializeUserMap();
         items = FileUtil.deserializeItemList();
+        if (items!=null && !items.isEmpty()){
+            Item item = items.get(items.size() - 1);
+            itemId = item.getId() + 1;
+        }
     }
 }

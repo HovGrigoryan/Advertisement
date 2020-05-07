@@ -23,11 +23,7 @@ public class AdvertisementMain implements Commands {
 
 
     public static void main(String[] args) throws IOException, ClassNotFoundException, EOFException {
-        try {
-            dataStorage.initData();
-        } catch (EOFException e) {
-            System.out.println("Is empty,please RESGITER");
-        }
+        dataStorage.initData();
         boolean Isrun = true;
         while (Isrun) {
             Commands.printMainCommands();
