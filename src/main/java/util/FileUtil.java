@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FileUtil {
-    private static final String USER_MAP_PATH = "C:\\Users\\Hov\\Desktop\\GIT JAVA\\Advertisement\\Advertisement\\src\\resource\\userMap.obj";
-    private static final String ITEM_LIST_PATH = "C:\\Users\\Hov\\Desktop\\GIT JAVA\\Advertisement\\Advertisement\\src\\resource\\itemList.obj";
+public class    FileUtil {
+    private static final String USER_MAP_PATH = "src/main/resources/userMap.obj";
+    private static final String ITEM_LIST_PATH = "src/main/resources/itemList.obj";
 
     public static void serializeUserMap(Map<String, User> userMap)  {
         File userMapFile = new File(USER_MAP_PATH);
