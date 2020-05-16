@@ -1,10 +1,12 @@
 package model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
 @Data
+@NoArgsConstructor
 public class Item implements Comparable<Item>, Serializable {
     private Long id;
     private String title;

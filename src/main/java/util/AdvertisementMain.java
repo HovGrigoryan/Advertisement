@@ -5,20 +5,16 @@ import model.Category;
 import model.Gender;
 import model.Item;
 import model.User;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import storage.DataStorage;
 
-import java.io.EOFException;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Scanner;
+import javax.xml.crypto.Data;
+import java.io.*;
+import java.util.*;
 
 public class AdvertisementMain implements Commands {
 
@@ -66,19 +62,19 @@ public class AdvertisementMain implements Commands {
             XSSFWorkbook workbook = new XSSFWorkbook(xlsxPath);
             Sheet sheet = workbook.getSheetAt(0);
             int lastRowNum = sheet.getLastRowNum();
-            for (int i = 1; i <=lastRowNum ; i++) {
+            for (int i = 1; i <= lastRowNum; i++) {
                 Row row = sheet.getRow(i);
                 String name = row.getCell(0).getStringCellValue();
                 String surname = row.getCell(1).getStringCellValue();
                 Double age = row.getCell(2).getNumericCellValue();
-                Gender gender =Gender.valueOf(row.getCell(3).getStringCellValue()) ;
+                Gender gender = Gender.valueOf(row.getCell(3).getStringCellValue());
                 Cell phoneNumber = row.getCell(4);
                 String phoneNumberStr = phoneNumber.getCellType() == CellType.NUMERIC ?
-                        String.valueOf(Double.valueOf( phoneNumber.getNumericCellValue()).intValue()) : phoneNumber.getStringCellValue();
+                        String.valueOf(Double.valueOf(phoneNumber.getNumericCellValue()).intValue()) : phoneNumber.getStringCellValue();
                 Cell password = row.getCell(5);
                 String passwordStr = password.getCellType() == CellType.NUMERIC ?
-                        String.valueOf(Double.valueOf( password.getNumericCellValue()).intValue()) : password.getStringCellValue();
-                User user  = new User();
+                        String.valueOf(Double.valueOf(password.getNumericCellValue()).intValue()) : password.getStringCellValue();
+                User user = new User();
                 user.setName(name);
                 user.setSurname(surname);
                 user.setAge(age.intValue());
@@ -179,9 +175,84 @@ public class AdvertisementMain implements Commands {
                     deleteById();
                     dataStorage.printItems();
                     break;
+                case IMPORT_ITEMS:
+                    imporItemsFromXlsx();
+                    break;
+                case EXPORT_ITEMS:
+                    exportItemstoXlsx();
+                    break;
                 default:
                     System.out.println("Wrong Command");
             }
+        }
+
+    }
+
+    private static void exportItemstoXlsx() {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet sheet = workbook.createSheet("items");
+        List<Item> items = FileUtil.deserializeItemList();
+        int rowCount = 0;
+        Row row = sheet.createRow(rowCount++);
+
+        row.createCell(0).setCellValue("title");
+        row.createCell(1).setCellValue("text");
+        row.createCell(2).setCellValue("price");
+        row.createCell(3).setCellValue("category");
+        row.createCell(4).setCellValue("date");
+
+        for (Item item : items) {
+            row = sheet.createRow(rowCount++);
+            row.createCell(0).setCellValue(item.getTitle());
+            row.createCell(1).setCellValue(item.getText());
+            row.createCell(2).setCellValue(item.getPrice());
+            row.createCell(3).setCellValue(String.valueOf(item.getCategory()));
+            CellStyle cellStyle = workbook.createCellStyle();
+            CreationHelper creationHelper = workbook.getCreationHelper();
+            cellStyle.setDataFormat(creationHelper.createDataFormat().getFormat("m/d//yy h:mm"));
+            Cell dataCell = row.createCell(4);
+            dataCell.setCellValue(item.getCreateddate());
+            dataCell.setCellStyle(cellStyle);
+
+        }
+        try (FileOutputStream fileOutputStream = new FileOutputStream("src\\main\\resources\\itemexport.xlsx")) {
+            workbook.write(fileOutputStream);
+            System.out.println("Items was exported");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private static void imporItemsFromXlsx() {
+        System.out.println("Please select xlsx path");
+        String xlsxPath = scanner.nextLine();
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook(xlsxPath);
+            Sheet sheet = workbook.getSheetAt(0);
+            int lastRowNum = sheet.getLastRowNum();
+            for (int i = 1; i <= lastRowNum; i++) {
+                Row row = sheet.getRow(i);
+                String title = row.getCell(0).getStringCellValue();
+                String text = row.getCell(1).getStringCellValue();
+                Double price = row.getCell(2).getNumericCellValue();
+                Category category = Category.valueOf(row.getCell(3).getStringCellValue());
+                Date date = row.getCell(4).getDateCellValue();
+                Item item = new Item();
+                item.setTitle(title);
+                item.setText(text);
+                item.setPrice(price);
+                item.setCategory(category);
+                item.setCreateddate(date);
+                item.setUser(currentUser);
+                System.out.println(item);
+                dataStorage.add(item);
+                System.out.println("item imported succeed");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

@@ -57,7 +57,7 @@ public class    FileUtil {
         }
     }
 
-    public static List<Item> deserializeItemList() throws IOException, ClassNotFoundException {
+    public static List<Item> deserializeItemList()  {
         List<Item> result = new ArrayList<>();
         File itemListFile = new File(ITEM_LIST_PATH);
         if (itemListFile.exists()) {

@@ -8,6 +8,7 @@ public interface Commands {
     int IMPORT_USERS = 3;
 
 
+
     int LOGOUT = 0;
     int ADD_NEW_AD = 1;
     int PRINT_MY_ADS = 2;
@@ -17,6 +18,8 @@ public interface Commands {
     int PRINT_ALL_ADS_SORT_BY_DATE  = 6;
     int DELETE_MY_ALL_ADDS = 7;
     int DELETE_AD_BY_iD = 8;
+    int IMPORT_ITEMS = 9;
+    int EXPORT_ITEMS = 10;
 
 
     static void printMainCommands() {
@@ -24,6 +27,7 @@ public interface Commands {
         System.out.println("Please enter " + LOGIN + " for LOGIN");
         System.out.println("Please enter " + REGISTER + " for REGISTER");
         System.out.println("Please enter " + IMPORT_USERS + " for IMPORT_USERS");
+
 
     }
     static void printUserCommand() {
@@ -36,6 +40,8 @@ public interface Commands {
         System.out.println("Please enter " + PRINT_ALL_ADS_SORT_BY_DATE + "for print all AD by Date Sort");
         System.out.println("Please enter " + DELETE_MY_ALL_ADDS + "for delete my all AD ");
         System.out.println("Please enter " + DELETE_AD_BY_iD + "for delete my all AD by ID ");
+        System.out.println("Please enter " + IMPORT_ITEMS + "for IMPORT_ITEMS ");
+        System.out.println("Please enter " + EXPORT_ITEMS + "for EXPORT_ITEMS ");
 
     }
 }
