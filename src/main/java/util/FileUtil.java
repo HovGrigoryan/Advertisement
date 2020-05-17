@@ -9,11 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class    FileUtil {
+public class FileUtil {
     private static final String USER_MAP_PATH = "src/main/resources/userMap.obj";
     private static final String ITEM_LIST_PATH = "src/main/resources/itemList.obj";
 
-    public static void serializeUserMap(Map<String, User> userMap)  {
+    public static void serializeUserMap(Map<String, User> userMap) {
         File userMapFile = new File(USER_MAP_PATH);
         try {
             if (!userMapFile.exists()) {
@@ -43,7 +43,7 @@ public class    FileUtil {
     }
 
 
-    public static void serializeItemList(List<Item> items) throws IOException {
+    public static void serializeItemList(List<Item> items)  {
         File itemListFile = new File(ITEM_LIST_PATH);
         try {
             if (!itemListFile.exists()) {
@@ -57,7 +57,7 @@ public class    FileUtil {
         }
     }
 
-    public static List<Item> deserializeItemList()  {
+    public static List<Item> deserializeItemList() {
         List<Item> result = new ArrayList<>();
         File itemListFile = new File(ITEM_LIST_PATH);
         if (itemListFile.exists()) {

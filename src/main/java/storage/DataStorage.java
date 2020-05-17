@@ -14,12 +14,12 @@ public class DataStorage {
     private Map<String, User> userMap = new HashMap<>();
     private List<Item> items = new ArrayList<>();
 
-    public void add(User user) throws IOException {
+    public void add(User user)  {
         userMap.put(user.getPhoneNumber(), user);
         FileUtil.serializeUserMap(userMap);
     }
 
-    public void add(Item item) throws IOException {
+    public void add(Item item)  {
         item.setId(itemId++);
         items.add(item);
         FileUtil.serializeItemList(items);
@@ -109,5 +109,9 @@ public class DataStorage {
             Item item = items.get(items.size() - 1);
             itemId = item.getId() + 1;
         }
+    }
+
+    public List<Item> getItems() {
+        return items;
     }
 }
